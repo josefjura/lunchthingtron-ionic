@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('ionic.utils', [])
-  .service('$userConfig', function ($window, $log, $localstorage) {
+angular.module('main')
+  .service('UserConfig', function ($log, $localstorage) {
     return {
-      loadRestaurants: function (params) {
+      getRestaurantList: function () {
         var config = $localstorage.getObject('config');
         if (config.restaurants !== null) {
           $log.log('Loaded configuration. Length: ' + config.restaurants.length);
