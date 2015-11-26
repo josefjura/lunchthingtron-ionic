@@ -1,8 +1,16 @@
 <ion-view view-title="Restaurants">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon button-clear ion-plus" ng-click="doSomething()">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-
-    <!-- content goes here -->
-
-
+    <div class="bar" ng-show="ctrl.restaurants.length == 0">
+      <h2 class="title">No restaurations defined</h2>
+    </div>
+    <ion-list ng-show="ctrl.restaurants.length > 0">
+      <ion-item ng-repeat="rest in ctrl.restaurants">
+        <h2>{{rest.Name}}</h2>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

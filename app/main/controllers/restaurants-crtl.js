@@ -1,21 +1,20 @@
 'use strict';
 angular.module('main')
-  .controller('RestaurantsCtrl', function ($log, Config, $localstorage) {
+  .controller('RestaurantsCtrl', function ($log, Config, $localstorage, $scope, $ionicModal) {
 
     $log.log('Hello from your Controller: RestaurantsCtrl in module main:. This is your controller:', this);
 
-    var post = $localstorage.getObject('config');
-    if (post !== null) {
-      $log.log('Loaded configuration. Length: ' + post.length);
-      this.restaurants = post;
+    var config = $localstorage.getObject('config');
+    if (config.restaurants !== null) {
+      $log.log('Loaded configuration. Length: ' + config.restaurants.length);
+      this.restaurants = config.restaurants;
     }
     else {
       $log.log('Creating new configuration');
       this.restaurants = [];
-      $localstorage.setObject('config', this.restaurants);
+      config.restaurants = this.restaurants;
+      $localstorage.setObject('config', config);
     }
-
     this.ENV = Config.ENV;
     this.BUILD = Config.BUILD;
-
   });
