@@ -1,24 +1,14 @@
 'use strict';
 angular.module('main')
-.controller('DashboardCtrl', function ($log, Zomato, Config, $localstorage) {
+  .controller('DashboardCtrl', function ($log, Zomato, Config, $userConfig) {
 
-  $log.log('Hello from your Controller: DashboardCtrl in module main:. This is your controller:', this);
+    $log.log('Hello from your Controller: DashboardCtrl in module main:. This is your controller:', this);
 
-    var config = $localstorage.getObject('config');
-    if (config.restaurants !== null) {
-      $log.log('Loaded configuration. Length: ' + config.restaurants.length);
-      this.restaurants = config.restaurants;
-    }
-    else {
-      $log.log('Creating new configuration');
-      this.restaurants = [];
-      config.restaurants = this.restaurants;
-      $localstorage.setObject('config', config);
-    }
+    this.restaurants = $userConfig.getRestaurants();
 
-  // bind data from services
-  this.someData = Zomato.someData;
-  this.ENV = Config.ENV;
-  this.BUILD = Config.BUILD;
+    // bind data from services
+    this.someData = Zomato.someData;
+    this.ENV = Config.ENV;
+    this.BUILD = Config.BUILD;
 
-});
+  });

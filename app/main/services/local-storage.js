@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ionic.utils', [])
-.factory('$localstorage', ['$window', function ($window) {
+.factory('$localstorage', function ($window) {
   return {
     set: function (key, value) {
       $window.localStorage[key] = value;
@@ -16,4 +16,4 @@ angular.module('ionic.utils', [])
       return JSON.parse($window.localStorage[key] || '{}');
     }
   };
-}]);
+});
