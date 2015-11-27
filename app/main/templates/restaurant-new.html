@@ -1,5 +1,21 @@
 <ion-view view-title="Add new restaurant">
-  <ion-content>  
-    
+  <ion-header-bar class="bar-subheader item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Restaurant name" ng-model="ctrl.searchTerm">
+    </label>
+    <button class="button button-small" ng-click="ctrl.search()">
+      Search
+    </button>
+  </ion-header-bar>
+  <ion-content>
+    <div class="bar" ng-show="ctrl.results.length == 0">
+      <h2 class="title">No results</h2>
+    </div>
+    <ion-list ng-show="ctrl.results.length > 0">
+      <ion-item ng-repeat="res in ctrl.results">
+        <h2>{{res.name}}</h2>
+        <p>{{res.url}}</p>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

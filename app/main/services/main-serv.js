@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.service('Zomato', function ($log, $timeout) {
+.service('Main', function ($log, $timeout) {
 
   $log.log('Hello from your Service: Main in module main');
 
