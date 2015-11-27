@@ -1,8 +1,8 @@
 'use strict';
 angular.module('main')
-	.controller('RestaurantsNewCtrl', function ($log, $ionicLoading, UserConfig, Zomato) {
+	.controller('RestaurantsNewCtrl', function ($log, $ionicLoading, $ionicListDelegate, UserConfig, Zomato) {
 		var self = this;
-		self.searchTerm = "";
+		self.searchTerm = '';
 		self.results = [];
 		$log.log('Hello from your Controller: RestaurantNewCtrl in module main:. This is your controller:', this);
 
@@ -13,8 +13,8 @@ angular.module('main')
 			Zomato.searchAsync(self.searchTerm, function (response) {
 				$ionicLoading.hide();
 				if (response.success) {
-					self.results = response.result;
-					self.searchTerm = "";
+					self.results = markExisting(response.result);
+					self.searchTerm = '';
 				}
 				else {
 					$log.log(response.error);
@@ -22,4 +22,31 @@ angular.module('main')
 			});
 
 		};
+
+		self.add = function (item) {
+			$ionicListDelegate.closeOptionButtons();
+			UserConfig.addRestaurant(item);
+			item.added = true;
+		};
+
+		self.remove = function (item) {
+			$ionicListDelegate.closeOptionButtons();
+			UserConfig.removeRestaurant(item);
+			item.added = false;
+		};
+
+		function markExisting(results) {
+			var rests = UserConfig.getRestaurantList();
+			for (var i in results) {
+				if (results.hasOwnProperty(i)) {
+					for (var ii in rests) {
+						if (rests.hasOwnProperty(ii)) {
+							var element = rests[ii];
+							results[i].added = results[i].url === element.url;
+						}
+					}
+				}
+			}
+			return results;
+		}
 	});

@@ -1,7 +1,7 @@
 /* global $ */
 'use strict';
 angular.module('main')
-	.service('Zomato', function ($log, $http, $timeout) {
+	.service('Zomato', function ($log, $http) {
 		this.readUrl = function (id, url) {
 			var result = {};
 			$http.get(url + '/menu#daily')
@@ -13,12 +13,14 @@ angular.module('main')
 						$log.log(error);
 						result = { success: false, error: error };
 					});
-		}
+
+			return result;
+		};
 
 		this.searchAsync = function (searchTerm, callback) {
 			var url = 'https://www.zomato.com/cs/praha/restaurace?q=' + encodeURIComponent(searchTerm);
-			$http.get(url).
-				then(function (response) {
+			$http.get(url)
+				.then(function (response) {
 					var searchRes = parseSearch(response.data);
 					callback({ success: true, result: searchRes });
 				},
@@ -26,10 +28,12 @@ angular.module('main')
 						$log.log(error);
 						callback({ success: false, error: error });
 					});
-		}
+		};
 
 		function parseResponse(id, data, parseItems) {
-			if (parseItems == undefined || parseItems == null) parseItems = false;
+			if (parseItems === undefined || parseItems === null) {
+				parseItems = false;
+			}
 			var items = [];
 			var name = $(data).find('.res-name a span').text();
 			var container = $(data).find('#daily-menu-container');
@@ -62,11 +66,12 @@ angular.module('main')
 					var name = $(element).text();
 					var id = name.replace(' ', '').toLowerCase();
 					var url = $(element).attr('href');
-					if (name && id && url)
+					if (name && id && url) {
 						toReturn.push({ id: id, name: name, url: url });
+					}
 				}
 			}
-			
+
 			return toReturn;
 		}
 	});

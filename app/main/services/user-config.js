@@ -3,10 +3,10 @@
 angular.module('main')
   .service('UserConfig', function ($log, $localstorage) {
     var self = this;
-    
+
     this.getRestaurantList = function () {
       var config = $localstorage.getObject('config');
-      if (config.restaurants !== null) {
+      if (config.restaurants) {
         $log.log('Loaded configuration. Length: ' + config.restaurants.length);
       }
       else {
@@ -27,9 +27,16 @@ angular.module('main')
       return config.restaurants;
     };
 
-    this.pushRestaurant = function (restaurant) {
+    this.addRestaurant = function (restaurant) {
       var list = self.getRestaurantList();
       list.push(restaurant);
+      self.setRestaurantList(list);
+    }
+
+    this.removeRestaurant = function (restaurant) {
+      var list = self.getRestaurantList();
+      var index = list.indexOf(restaurant);
+      list.splice(index,1);
       self.setRestaurantList(list);
     }
   });

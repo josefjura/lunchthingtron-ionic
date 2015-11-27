@@ -15,6 +15,12 @@
       <ion-item ng-repeat="res in ctrl.results">
         <h2>{{res.name}}</h2>
         <p>{{res.url}}</p>
+        <ion-option-button class="button-positive" ng-show="!res.added" ng-click="ctrl.add(res)">
+          Add
+        </ion-option-button>
+        <ion-option-button class="button-assertive" ng-show="res.added" ng-click="ctrl.remove(res)">
+          Remove
+        </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>
