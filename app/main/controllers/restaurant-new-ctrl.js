@@ -25,8 +25,10 @@ angular.module('main')
 
 		self.add = function (item) {
 			$ionicListDelegate.closeOptionButtons();
-			UserConfig.addRestaurant(item);
-			item.added = true;
+			if (!item.added) {
+				UserConfig.addRestaurant(item);
+				item.added = true;
+			}
 		};
 
 		self.remove = function (item) {
@@ -41,12 +43,12 @@ angular.module('main')
 				if (results.hasOwnProperty(i)) {
 					for (var ii in rests) {
 						if (rests.hasOwnProperty(ii)) {
-							var element = rests[ii];
-							results[i].added = results[i].url === element.url;
+							results[i].added = results[i].url === rests[ii].url;
 						}
 					}
 				}
 			}
+
 			return results;
 		}
 	});
