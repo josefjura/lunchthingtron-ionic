@@ -39,19 +39,4 @@ angular.module('main')
       list.splice(index,1);
       self.setRestaurantList(list);
     }
-    
-    
-		function markExisting(rests, results) {			
-			for (var i in results) {
-				if (results.hasOwnProperty(i)) {
-					for (var ii in rests) {
-						if (rests.hasOwnProperty(ii)) {
-							var element = rests[ii];
-							results[i].added = results[i].url === element.url;
-						}
-					}
-				}
-			}
-			return results;
-		}
   });
